@@ -4,7 +4,7 @@ from langchain.chains import LLMChain
 from langchain.chains import SimpleSequentialChain
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
-
+import os
 
 def fact_check(question):
     llm = OpenAI(temperature=0.7)
@@ -35,11 +35,14 @@ def fact_check(question):
 
 if __name__=="__main__":
     st.text_input("Your question", key="question")
+    st.text_input("OpenAI api key", key="api_key")
     if len(sys.argv) > 1:
         question = sys.argv[1]
+        api_key = os.environ['OPENAI_API_KEY']
     else:
         question = st.session_state.question
-    print(question)
-    if question:
+        api_key = st.session_state.api_key
+        print(question)
+    if question and api_key:
         answer = fact_check(question)
         st.write(answer)
