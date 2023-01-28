@@ -1,10 +1,10 @@
-from langchain.llms import OpenAI
-from langchain.chains import LLMChain
-from langchain.prompts import PromptTemplate
-from langchain.chains import SimpleSequentialChain
-import sys
-import os
 import streamlit as st
+import sys
+from langchain.chains import LLMChain
+from langchain.chains import SimpleSequentialChain
+from langchain.llms import OpenAI
+from langchain.prompts import PromptTemplate
+
 
 def fact_check(question):
     llm = OpenAI(temperature=0.7)
@@ -34,7 +34,6 @@ def fact_check(question):
     return overall_chain.run(question)
 
 if __name__=="__main__":
-    os.environ['OPENAI_API_KEY'] = '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'
     st.text_input("Your question", key="question")
     if len(sys.argv) > 1:
         question = sys.argv[1]
