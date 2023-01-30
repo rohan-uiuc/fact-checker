@@ -35,13 +35,16 @@ def fact_check(question):
 
 if __name__=="__main__":
     st.text_input("Your question", key="question")
-    st.text_input("OpenAI api key", key="api_key")
+    st.text_input("OpenAI api key", key="api_key", placeholder= "Optional")
     if len(sys.argv) > 1:
         question = sys.argv[1]
         api_key = os.environ['OPENAI_API_KEY']
     else:
         question = st.session_state.question
-        api_key = st.session_state.api_key
+        if st.session_state.api_key:
+            api_key = st.session_state.api_key
+        else:
+            api_key = os.environ['OPENAI_API_KEY']
         print(question)
     if question and api_key:
         answer = fact_check(question)
